@@ -8,14 +8,14 @@ const client = new Discord.Client();
 const webhook = new Discord.WebhookClient(config.webhookid, config.webhooktoken);
 client.login(config.bottoken)
 
-const postDict = JSON.parse(fs.readFileSync(posts, 'utf8'));
+const postDict = JSON.parse(fs.readFileSync('./posts.json', 'utf8'));
 
 function postLog(id, url) {
   if (!postDict[id]) posts[id] = {
-    url
+    url: url
   }
   else{return;}
-  fs.writeFile(posts,JSON.stringify(postDict), (err) => {
+  fs.writeFile('./posts.json',JSON.stringify(postDict), (err) => {
     if (err) console.error(err)
   })
 }
@@ -43,7 +43,7 @@ request(config.url, function(error,response,body) {
      if (postDict[ok.data.id]) {return;}
      else {
         webhook.sendMessage(`${ok.data.title}\n${ok.data.preview.images[0].source.url}`)
-      postLog(ok.data.id, ok.data.preview,images[0].source.url)
+      postLog(ok.data.id, ok.data.preview.images[0].source.url)
      }
     }
     else{
@@ -62,6 +62,8 @@ function redditInterval() {
 }
 redditInterval();
 
-
+client.on('ready', () => {
+  console.log('Seizing the means of production in 3, 2, 1...');
+});
 
 

@@ -10,9 +10,9 @@ client.login(config.bottoken)
 
 const postDict = JSON.parse(fs.readFileSync('./posts.json', 'utf8'));
 
-function postLog(id, url) {
-  if (!postDict[id]) posts[id] = {
-    url: url
+function postLog(postId, postUrl) {
+  if (!postDict[postId]) posts[postId] = {
+    url: postUrl
   }
   else{return;}
   fs.writeFile('./posts.json',JSON.stringify(postDict), (err) => {
@@ -33,21 +33,21 @@ request(config.url, function(error,response,body) {
         let r34 = ".png"
     if (ok.data.url.includes(NUT) && !ok.data.url.includes(ext) && !ok.data.url.includes(otherExt || dril || r34)) {
        const SHACK = ok.data.url + ext
-      if (postDict[ok.data.id]) {return;}
+      if (postDict[ok.data.id]) return;
       else {
          webhook.sendMessage(`${ok.data.title}\n${SHACK}`);
        postLog(ok.data.id, SHACK)
       }
     }
     else if (ok.data.url.includes("i.reddituploads.com")){
-     if (postDict[ok.data.id]) {return;}
+     if (postDict[ok.data.id]) return;
      else {
         webhook.sendMessage(`${ok.data.title}\n${ok.data.preview.images[0].source.url}`)
       postLog(ok.data.id, ok.data.preview.images[0].source.url)
      }
     }
     else{
-      if (postDict[ok.data.id]) {return;}
+      if (postDict[ok.data.id]) return;
       else{
         postLog(ok.data.id, ok.data.url)
         webhook.sendMessage(`${ok.data.title}\n${ok.data.url}`);

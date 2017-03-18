@@ -31,8 +31,9 @@ request(config.url, function(error,response,body) {
         let otherExt = ".gif"
         let dril = ".gifv"
         let r34 = ".png"
-    if (ok.data.url.includes(NUT) && !ok.data.url.includes(ext) && !ok.data.url.includes(otherExt || dril || r34)) {
-       const SHACK = ok.data.url + ext
+        let irl = "i."
+    if (ok.data.url.includes(NUT) && !ok.data.url.includes(ext || otherExt || dril || r34 || irl)) {
+       const SHACK = irl + ok.data.url + ext
       if (postDict[ok.data.id]) return;
       else {
          webhook.sendMessage(`${ok.data.title}\n${SHACK}`);

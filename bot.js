@@ -67,7 +67,7 @@ request(config.url, function(error,response,body) {
 function redditInterval() {
  setInterval(() => (fetchRedditPost()), 360000);
 }
-fetchRedditPost();
+redditInterval();
 
 client.on('ready', () => {
   console.log('Seizing the means of production in 3, 2, 1...');

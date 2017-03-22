@@ -74,3 +74,6 @@ client.on('ready', () => {
 });
 
 
+client.on('disconnect', () => {
+  client.login(congfig.bottoken);
+});

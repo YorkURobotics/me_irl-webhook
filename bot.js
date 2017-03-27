@@ -3,13 +3,12 @@ const request = require('request');
 const fs = require('fs');
 const config = require('./config.json');
 const posts = require('./posts.json');
-const client = new Discord.Client();
+
 
 const webhook = new Discord.WebhookClient(config.webhookid, config.webhooktoken);
-client.login(config.bottoken)
 
 const postDict = JSON.parse(fs.readFileSync('./posts.json', 'utf8'));
-
+//function for logging ids and urls of posts to stop repeat posts.
 function postLog(postId, postUrl) {
     postDict[postId] = {
     url: postUrl
@@ -23,7 +22,6 @@ function postLog(postId, postUrl) {
 function fetchRedditPost() {
 request(config.url, function(error,response,body) {
       var ok = JSON.parse(body)
-      var lol = ok.data.children[0].data
       ok.data.children.forEach(function(ok){
         let NUT = "imgur.com"
         let ext = ".jpg"
@@ -31,9 +29,12 @@ request(config.url, function(error,response,body) {
         let dril = ".gifv"
         let r34 = ".png"
         let alb = "/a/"
-    if (ok.data.url.includes(NUT) && !ok.data.url.includes(ext || otherExt || dril || r34)) {
+        //checking if it's an imgur link without .jpg, .gif, .gifv, .png
+    if (ok.data.url.includes(NUT) && !ok.data.url.includes(ext && otherExt && dril && r34)) {
        const SHACK = ok.data.url + ext
+       //skip imgur album links
      if (ok.data.url.includes(alb)) return;
+     //check if this post has been logged. If false, post it on Discord and log it, if true, do not post it
       if (!postDict[ok.data.id]){
         webhook.sendMessage(`${ok.data.title}\n${SHACK}`);
        postLog(ok.data.id, SHACK)
@@ -42,6 +43,7 @@ request(config.url, function(error,response,body) {
          return
       }
     }
+    //urls containing i.reddituploads.com don't show up in Discord
     else if (ok.data.url.includes("i.reddituploads.com")){
      if (!postDict[ok.data.id]) {
      postLog(ok.data.id,ok.data.preview.images[0].source.url);
@@ -69,11 +71,6 @@ function redditInterval() {
 }
 redditInterval();
 
-client.on('ready', () => {
-  console.log('Seizing the means of production in 3, 2, 1...');
-});
+console.log('Seizing the means of production in 3, 2, 1...');
 
 
-client.on('disconnect', () => {
-  client.login(congfig.bottoken);
-});

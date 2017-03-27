@@ -71,6 +71,6 @@ function redditInterval() {
 }
 redditInterval();
 
-console.log('Seizing the means of production in 3, 2, 1...');//jsfdxxxgrrr
+console.log('Seizing the means of production in 3, 2, 1...');
 
 

@@ -67,7 +67,7 @@ request(config.url, function(error,response,body) {
 })
 };
 function redditInterval() {
- setInterval(() => (fetchRedditPost()), 360000);
+ setInterval(() => (fetchRedditPost()), 3600);
 }
 redditInterval();
 

@@ -9,9 +9,9 @@
   "author": "FrankenMan",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^11.0.0",
+    "discord.js": ">=11.0.0",
     "erlpack": "github:hammerandchisel/erlpack",
-    "request": "^2.79.0",
-    "uws": "^0.13.0"
+    "request": ">=2.79.0",
+    "uws": ">=0.13.0"
   }
 }

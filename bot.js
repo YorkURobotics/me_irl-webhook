@@ -67,10 +67,8 @@ request(config.url, function(error,response,body) {
 })
 };
 function redditInterval() {
- setInterval(() => (fetchRedditPost()), 3600);
+ setInterval(() => (fetchRedditPost()), 60);
 }
 redditInterval();
-
-console.log('Seizing the means of production in 3, 2, 1...');//jsfdxxxgrrr
 
 
